@@ -1,0 +1,32 @@
+// Marker Sync Expression
+// Modified expression based on Dan Ebbert's Marker Sync Expression
+// Original Version: http://www.motionscript.com/design-guide/marker-sync.html
+// Full Tutorial: https://www.youtube.com/watch?v=B_3XS2-VWOM&t=698s
+
+src = comp(name).layer("Markers");
+n = 0;
+if (marker.numKeys > 0) {
+    n = marker.nearestKey(time).index;
+    if (marker.key(n).time > time) {
+        n--;
+    }
+}
+if (n == 0) {
+    0
+} else {
+    m = marker.key(n);
+    myComment = m.comment;
+    t = time - m.time;
+    try {
+        mark = src.marker.key(myComment);
+        if (src.marker.numKeys > mark.index) {
+            tMax = src.marker.key(mark.index + 1).time - mark.time;
+        } else {
+            tMax = src.outPoint - mark.time;
+        }
+        t = Math.min(t, tMax);
+        mark.time + t;
+    }catch (err) {
+        0
+    }
+}
