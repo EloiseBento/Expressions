@@ -1,0 +1,20 @@
+if (thisProperty.numKeys == 0) { t = 0;	 } 
+
+// Find the previous marker from current time
+else {
+    n = 0;
+    if (marker.numKeys > 0){
+        n = marker.nearestKey(time).index;
+        if (marker.key(n).time > time){ n--;}
+    }
+
+    // If there is no previous marker, the value at frame 0 is output 
+    if (n == 0){ t  = 0; }
+
+    // Calculate t from elapsed time since the last keyframe
+    else{
+        m = marker.key(n);
+        t = time - m.time;
+    }
+}
+valueAtTime(t)
